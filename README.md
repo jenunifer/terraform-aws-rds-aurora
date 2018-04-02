@@ -11,7 +11,7 @@
 | cluster_identifier |  | string | - | yes |
 | db_cluster_parameter_group_name | The name of a DB Cluster parameter group to use | string | `default.aurora5.6` | no |
 | db_cluster_parameter_group_name | The name of a DB Cluster parameter group to use | string | `default.aurora5.6` | no |
-| db_cluster_parameters | List of DB cluster parameters to apply | list | - | yes |
+| db_cluster_parameters | List of DB cluster parameters to apply | list | `<list>` | no |
 | db_instance_parameters | List of DB instances parameters to apply | list | `<list>` | no |
 | db_name | Database name | string | `dba_ops` | no |
 | db_parameter_group_name | The name of a DB parameter group to use | string | `default.aurora5.6` | no |

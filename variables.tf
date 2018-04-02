@@ -112,12 +112,24 @@ variable "auto_minor_version_upgrade" {
 
 variable "db_cluster_parameters" {
   type        = "list"
+  default     = []
   description = "List of DB cluster parameters to apply"
 }
 
 variable "db_instance_parameters" {
-  type        = "list"
-  default     = []
+  type = "list"
+
+  default = [
+    {
+      name  = "slow_query_log"
+      value = "1"
+    },
+    {
+      name  = "slow_query_log_file"
+      value = "/rdsdbdata/log/slowquery/mysql-slowquery.log	"
+    },
+  ]
+
   description = "List of DB instances parameters to apply"
 }
 
