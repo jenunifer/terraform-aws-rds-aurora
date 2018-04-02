@@ -2,9 +2,9 @@ variable "cluster_identifier" {
   type = "string"
 }
 
-variable "availability_zones" {
+variable "azs" {
   type        = "list"
-  description = "List of Availability Zones that instances in the DB cluster can be created in"
+  description = "List of AZs to use"
 }
 
 variable "db_name" {
@@ -13,37 +13,50 @@ variable "db_name" {
   description = "Database name"
 }
 
-variable "admin_user" {
+variable "rds_username" {
   type        = "string"
   description = "(Required unless a snapshot_identifier is provided) Username for the master DB user"
 }
 
-variable "admin_password" {
+variable "rds_password" {
   type        = "string"
   description = "(Required unless a snapshot_identifier is provided) Password for the master DB user"
 }
 
-variable "retention_period" {
+variable "backup_retention_period" {
   type        = "string"
   default     = "7"
-  description = "Number of days to retain backups for"
+  description = "How long to keep backups for (in days)"
 }
 
-variable "backup_window" {
+variable "preferred_backup_window" {
   type        = "string"
-  default     = "07:00-09:00"
-  description = "Daily time range during which the backups happen"
+  default     = "02:00-03:00"
+  description = "When to perform DB backups"
 }
 
-variable "maintenance_window" {
+variable "preferred_maintenance_window" {
   type        = "string"
-  default     = "wed:03:00-wed:04:00"
-  description = "Weekly time range during which system maintenance can occur, in UTC"
+  default     = "sun:05:00-sun:06:00"
+  description = "When to perform DB maintenance"
 }
 
 variable "apply_immediately" {
-  type    = "string"
-  default = "true"
+  type        = "string"
+  default     = "false"
+  description = "Determines whether or not any DB modifications are applied immediately, or during the maintenance window"
+}
+
+variable "final_snapshot_identifier" {
+  type        = "string"
+  default     = ""
+  description = "The name to use when creating a final snapshot on cluster destroy, appends a random 8 digits to name to ensure it's unique too."
+}
+
+variable "skip_final_snapshot" {
+  type        = "string"
+  default     = "false"
+  description = "Should a final snapshot be created on cluster destroy"
 }
 
 variable "vpc_security_group_ids" {
@@ -59,24 +72,30 @@ variable "tags" {
 variable "engine" {
   type        = "string"
   default     = "aurora"
-  description = "The name of the database engine to be used for this DB cluster. Valid values: `aurora`, `aurora-postgresql`"
+  description = "Aurora database engine type, currently aurora, aurora-mysql or aurora-postgresql"
 }
 
-variable "engine_version" {
+variable "engine-version" {
   type        = "string"
-  description = "The version number of the database engine to use. Default is aurora5.6"
+  default     = "5.7.12a"
+  description = "Aurora database engine version."
 }
 
-variable "cluster_size" {
+variable "replica_count" {
   type        = "string"
-  default     = "2"
-  description = "Number of DB instances to create in the cluster"
+  default     = "0"
+  description = "Number of reader nodes to create.  If `replica_scale_enable` is `true`, the value of `replica_scale_min` is used instead."
+}
+
+variable "security_groups" {
+  type        = "list"
+  description = "VPC Security Group IDs"
 }
 
 variable "instance_type" {
   type        = "string"
   default     = "db.t2.medium"
-  description = "Instance type to use"
+  description = "Instance typeuse to use"
 }
 
 variable "cluster_family" {
@@ -85,9 +104,14 @@ variable "cluster_family" {
   default     = "aurora5.7"
 }
 
+variable "auto_minor_version_upgrade" {
+  type        = "string"
+  default     = "true"
+  description = "Determines whether minor engine upgrades will be performed automatically in the maintenance window"
+}
+
 variable "db_cluster_parameters" {
   type        = "list"
-  default     = []
   description = "List of DB cluster parameters to apply"
 }
 
@@ -97,9 +121,16 @@ variable "db_instance_parameters" {
   description = "List of DB instances parameters to apply"
 }
 
-variable "security_groups" {
-  type        = "list"
-  description = "List of security groups to be allowed to connect to the DB instance"
+variable "db_parameter_group_name" {
+  type        = "string"
+  default     = "default.aurora5.6"
+  description = "The name of a DB parameter group to use"
+}
+
+variable "db_cluster_parameter_group_name" {
+  type        = "string"
+  default     = "default.aurora5.6"
+  description = "The name of a DB Cluster parameter group to use"
 }
 
 variable "vpc_id" {
@@ -116,9 +147,27 @@ variable "rds_security_group_ids" {
   type = "list"
 }
 
+variable "subnets" {
+  type        = "list"
+  description = "List of subnet IDs to use"
+}
+
 variable "snapshot_identifier" {
   type        = "string"
-  description = "Specifies whether or not to create this cluster from a snapshot"
+  default     = ""
+  description = "DB snapshot to create this database from"
+}
+
+variable "db_parameter_group_name" {
+  type        = "string"
+  default     = "default.aurora5.6"
+  description = "The name of a DB parameter group to use"
+}
+
+variable "db_cluster_parameter_group_name" {
+  type        = "string"
+  default     = "default.aurora5.6"
+  description = "The name of a DB Cluster parameter group to use"
 }
 
 variable "db_port" {
