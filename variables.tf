@@ -61,6 +61,7 @@ variable "skip_final_snapshot" {
 
 variable "vpc_security_group_ids" {
   type        = "list"
+  default     = []
   description = "(Optional) List of VPC security groups to associate(default [])"
 }
 
@@ -90,6 +91,7 @@ variable "replica_count" {
 variable "security_groups" {
   type        = "list"
   description = "VPC Security Group IDs"
+  default     = []
 }
 
 variable "instance_type" {
