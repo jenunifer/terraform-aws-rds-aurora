@@ -59,12 +59,6 @@ variable "skip_final_snapshot" {
   description = "Should a final snapshot be created on cluster destroy"
 }
 
-variable "vpc_security_group_ids" {
-  type        = "list"
-  default     = []
-  description = "(Optional) List of VPC security groups to associate(default [])"
-}
-
 variable "tags" {
   type        = "map"
   description = "Additional tags (e.g. map(`workload-type`,`role`,`team`, `env`)"
@@ -86,12 +80,6 @@ variable "replica_count" {
   type        = "string"
   default     = "0"
   description = "Number of reader nodes to create.  If `replica_scale_enable` is `true`, the value of `replica_scale_min` is used instead."
-}
-
-variable "security_groups" {
-  type        = "list"
-  description = "VPC Security Group IDs"
-  default     = []
 }
 
 variable "instance_type" {
@@ -158,7 +146,9 @@ variable "rds_subnet_ids" {
 }
 
 variable "rds_security_group_ids" {
-  type = "list"
+  type        = "list"
+  default     = []
+  description = "(Optional) List of VPC security groups to associate(default [])"
 }
 
 variable "subnets" {
