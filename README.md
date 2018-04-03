@@ -9,13 +9,11 @@
 | backup_retention_period | How long to keep backups for (in days) | string | `7` | no |
 | cluster_family | The family of the DB cluster parameter group | string | `aurora5.7` | no |
 | cluster_identifier |  | string | - | yes |
-| db_cluster_parameter_group_name | The name of a DB Cluster parameter group to use | string | `default.aurora5.6` | no |
-| db_cluster_parameter_group_name | The name of a DB Cluster parameter group to use | string | `default.aurora5.6` | no |
+| db_cluster_parameter_group_name | The name of a DB Cluster parameter group to use | string | `default.aurora5.7` | no |
 | db_cluster_parameters | List of DB cluster parameters to apply | list | `<list>` | no |
 | db_instance_parameters | List of DB instances parameters to apply | list | `<list>` | no |
 | db_name | Database name | string | `dba_ops` | no |
-| db_parameter_group_name | The name of a DB parameter group to use | string | `default.aurora5.6` | no |
-| db_parameter_group_name | The name of a DB parameter group to use | string | `default.aurora5.6` | no |
+| db_parameter_group_name | The name of a DB parameter group to use | string | `default.aurora5.7` | no |
 | db_port | Database port | string | `3306` | no |
 | engine | Aurora database engine type, currently aurora, aurora-mysql or aurora-postgresql | string | `aurora` | no |
 | engine-version | Aurora database engine version. | string | `5.7.12a` | no |

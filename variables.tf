@@ -126,13 +126,13 @@ variable "db_instance_parameters" {
 
 variable "db_parameter_group_name" {
   type        = "string"
-  default     = "default.aurora5.6"
+  default     = "default.aurora5.7"
   description = "The name of a DB parameter group to use"
 }
 
 variable "db_cluster_parameter_group_name" {
   type        = "string"
-  default     = "default.aurora5.6"
+  default     = "default.aurora5.7"
   description = "The name of a DB Cluster parameter group to use"
 }
 
@@ -155,18 +155,6 @@ variable "snapshot_identifier" {
   type        = "string"
   default     = ""
   description = "DB snapshot to create this database from"
-}
-
-variable "db_parameter_group_name" {
-  type        = "string"
-  default     = "default.aurora5.6"
-  description = "The name of a DB parameter group to use"
-}
-
-variable "db_cluster_parameter_group_name" {
-  type        = "string"
-  default     = "default.aurora5.6"
-  description = "The name of a DB Cluster parameter group to use"
 }
 
 variable "db_port" {
