@@ -1,33 +1,9 @@
 // Declare datasource grabbing regions AZs to call when creating instances in seperate zones.
 data "aws_availability_zones" "available" {}
 
-// Create single DB instance
-resource "aws_rds_cluster_instance" "cluster_instance_0" {
-  identifier                   = "${aws_rds_cluster.default.id}-0"
-  cluster_identifier           = "${aws_rds_cluster.default.id}"
-  engine                       = "${aws_rds_cluster.default.engine}"
-  engine_version               = "${aws_rds_cluster.default.engine_version}"
-  instance_class               = "${var.instance_type}"
-  publicly_accessible          = "${var.publicly_accessible}"
-  subnet_ids                   = "${var.subnet_ids}"
-  db_parameter_group_name      = "${aws_db_parameter_group.default.name}"
-  preferred_maintenance_window = "${var.preferred_maintenance_window}"
-  apply_immediately            = "${var.apply_immediately}"
-  auto_minor_version_upgrade   = "${var.auto_minor_version_upgrade}"
-  promotion_tier               = "0"
-
-  tags {
-    role           = "${var.role}"
-    workgroup-type = "other"
-    team           = "${var.team}"
-    env            = "${var.env}"
-  }
-}
-
 // Create 'n' number of additional DB instance(s) in same cluster
 
-resource "aws_rds_cluster_instance" "cluster_instance_n" {
-  depends_on                   = ["aws_rds_cluster_instance.cluster_instance_0"]
+resource "aws_rds_cluster_instance" "cluster_instance" {
   count                        = "${var.replica_count}"
   cluster_identifier           = "${aws_rds_cluster.default.id}"
   engine                       = "${aws_rds_cluster.default.engine}"
