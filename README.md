@@ -1,4 +1,8 @@
 
+##  Terraform Module that creates RDS Aurora Cluster and one or more instances.  
+
+The cluster identifier on this module will not autogenerate ID's based on the random_id module.  This prevents ability to use current naming schema.
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
