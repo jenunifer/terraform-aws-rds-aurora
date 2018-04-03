@@ -140,20 +140,14 @@ variable "vpc_id" {
   description = "VPC ID to create the cluster in (e.g. `vpc-a22222ee`)"
 }
 
-variable "rds_subnet_ids" {
+variable "subnet_ids" {
   type        = "list"
-  description = "List of VPC subnet IDs"
+  description = "(Optional) A list of VPC subnet IDs (default: [])"
 }
 
-variable "rds_security_group_ids" {
+variable "vpc_security_group_ids" {
   type        = "list"
-  default     = []
   description = "(Optional) List of VPC security groups to associate(default [])"
-}
-
-variable "subnets" {
-  type        = "list"
-  description = "List of subnet IDs to use"
 }
 
 variable "snapshot_identifier" {

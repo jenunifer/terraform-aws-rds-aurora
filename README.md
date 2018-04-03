@@ -24,15 +24,14 @@
 | preferred_backup_window | When to perform DB backups | string | `02:00-03:00` | no |
 | preferred_maintenance_window | When to perform DB maintenance | string | `sun:05:00-sun:06:00` | no |
 | rds_password | (Required unless a snapshot_identifier is provided) Password for the master DB user | string | - | yes |
-| rds_security_group_ids | (Optional) List of VPC security groups to associate(default []) | list | `<list>` | no |
-| rds_subnet_ids | List of VPC subnet IDs | list | - | yes |
 | rds_username | (Required unless a snapshot_identifier is provided) Username for the master DB user | string | - | yes |
 | replica_count | Number of reader nodes to create.  If `replica_scale_enable` is `true`, the value of `replica_scale_min` is used instead. | string | `0` | no |
 | skip_final_snapshot | Should a final snapshot be created on cluster destroy | string | `false` | no |
 | snapshot_identifier | DB snapshot to create this database from | string | `` | no |
-| subnets | List of subnet IDs to use | list | - | yes |
+| subnet_ids | (Optional) A list of VPC subnet IDs (default: []) | list | - | yes |
 | tags | Additional tags (e.g. map(`workload-type`,`role`,`team`, `env`) | map | - | yes |
 | vpc_id | VPC ID to create the cluster in (e.g. `vpc-a22222ee`) | string | - | yes |
+| vpc_security_group_ids | (Optional) List of VPC security groups to associate(default []) | list | - | yes |
 
 ## Outputs
 

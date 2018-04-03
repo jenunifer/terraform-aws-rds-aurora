@@ -9,7 +9,7 @@ resource "aws_rds_cluster_instance" "cluster_instance_0" {
   engine_version               = "${aws_rds_cluster.default.engine_version}"
   instance_class               = "${var.instance_type}"
   publicly_accessible          = "${var.publicly_accessible}"
-  db_subnet_group_name         = "${var.db_subnet_group_name}"
+  subnet_ids                   = "${var.subnet_ids}"
   db_parameter_group_name      = "${aws_db_parameter_group.default.name}"
   preferred_maintenance_window = "${var.preferred_maintenance_window}"
   apply_immediately            = "${var.apply_immediately}"
@@ -35,7 +35,7 @@ resource "aws_rds_cluster_instance" "cluster_instance_n" {
   identifier                   = "${aws_rds_cluster.default.id}-${count.index + 1}"
   instance_class               = "${var.instance_type}"
   publicly_accessible          = false
-  db_subnet_group_name         = "${var.db_subnet_group_name}"
+  subnet_ids                   = "${var.subnet_ids}"
   db_parameter_group_name      = "${aws_db_parameter_group.default.name}"
   preferred_maintenance_window = "${var.preferred_maintenance_window}"
   apply_immediately            = "${var.apply_immediately}"
