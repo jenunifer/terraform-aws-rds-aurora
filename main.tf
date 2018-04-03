@@ -17,9 +17,9 @@ resource "aws_rds_cluster_instance" "cluster_instance_0" {
   promotion_tier               = "0"
 
   tags {
-    role           = "${var.rds_role}"
+    role           = "${var.role}"
     workgroup-type = "other"
-    team           = "${var.rds_team}"
+    team           = "${var.team}"
     env            = "${var.env}"
   }
 }
@@ -43,9 +43,9 @@ resource "aws_rds_cluster_instance" "cluster_instance_n" {
   promotion_tier               = "${count.index + 1}"
 
   tags {
-    role           = "${var.rds_role}"
+    role           = "${var.role}"
     workgroup-type = "other"
-    team           = "${var.rds_team}"
+    team           = "${var.team}"
     env            = "${var.env}"
   }
 }
