@@ -29,7 +29,7 @@
 | skip_final_snapshot | Should a final snapshot be created on cluster destroy | string | `false` | no |
 | snapshot_identifier | DB snapshot to create this database from | string | `` | no |
 | subnet_ids | (Optional) A list of VPC subnet IDs (default: []) | list | - | yes |
-| tags | Additional tags (e.g. map(`workload-type`,`role`,`team`, `env`) | map | - | yes |
+| tags | Additional tags (e.g. map(`workload-type`,`role`,`team`, `env`) | map | `<map>` | no |
 | vpc_id | VPC ID to create the cluster in (e.g. `vpc-a22222ee`) | string | - | yes |
 | vpc_security_group_ids | (Optional) List of VPC security groups to associate(default []) | list | - | yes |
 

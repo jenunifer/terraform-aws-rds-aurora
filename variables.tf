@@ -61,6 +61,7 @@ variable "skip_final_snapshot" {
 
 variable "tags" {
   type        = "map"
+  default     = {}
   description = "Additional tags (e.g. map(`workload-type`,`role`,`team`, `env`)"
 }
 
