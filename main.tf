@@ -56,14 +56,14 @@ resource "aws_rds_cluster" "default" {
 }
 
 resource "aws_rds_cluster_parameter_group" "default" {
-  name        = "h-${var.role}-${var.env}-p${var.pool_id}"
+  name        = "${var.prefix}-${var.role}-${var.env}-p${var.pool_id}"
   description = "DB cluster parameter group"
   family      = "${var.family}"
   parameter   = ["${var.db_cluster_parameters}"]
 }
 
 resource "aws_db_parameter_group" "default" {
-  name        = "h-${var.role}-${var.env}-p${var.pool_id}"
+  name        = "${var.prefix}-${var.role}-${var.env}-p${var.pool_id}"
   description = "DB Instance parameter group"
   family      = "${var.family}"
   parameter   = ["${var.db_instance_parameters}"]

@@ -1,3 +1,11 @@
+## This is currently a WIP
+
+(work in progress)
+
+#Terraform Module that creates RDS Aurora Cluster and one or more instances.
+
+The cluster identifier on this module will not autogenerate ID's based on the random_id module. This prevents ability to use current naming schema.
+
 
 ## Inputs
 
@@ -43,4 +51,3 @@
 | cluster_endpoint | Cluster endpoint |
 | cluster_identifier | The 'writer' endpoint for the cluster |
 | reader_endpoint | A read-only endpoint for the Aurora cluster, automatically load-balanced across replicas |
-

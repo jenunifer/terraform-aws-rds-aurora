@@ -55,13 +55,13 @@ variable "preferred_maintenance_window" {
 variable "pool_id" {
   type        = "string"
   description = "For use if cluster/instances have an additional identifier at the end of name."
-  default     = ""
+  default     = "1"
 }
 
 variable "prefix" {
   type        = "string"
-  description = "ID prefix."
-  default     = ""
+  description = "ID prefix. (h/o/p)"
+  default     = "h"
 }
 
 variable "apply_immediately" {
