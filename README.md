@@ -1,11 +1,10 @@
-## This is currently a WIP
+### This is currently a WIP
 
 (work in progress)
 
-#Terraform Module that creates RDS Aurora Cluster and one or more instances.
+# Terraform Module that creates RDS Aurora Cluster and one or more instances.
 
 The cluster identifier on this module will not autogenerate ID's based on the random_id module. This prevents ability to use current naming schema.
-
 
 ## Inputs
 
@@ -28,10 +27,10 @@ The cluster identifier on this module will not autogenerate ID's based on the ra
 | family | The family of the DB cluster parameter group | string | `aurora5.7` | no |
 | final_snapshot_identifier | The name to use when creating a final snapshot on cluster destroy, appends a random 8 digits to name to ensure it's unique too. | string | `` | no |
 | instance_type | Instance typeuse to use | string | `db.t2.medium` | no |
-| pool_id | For use if cluster/instances have an additional identifier at the end of name. | string | `` | no |
+| pool_id | For use if cluster/instances have an additional identifier at the end of name. | string | `1` | no |
 | preferred_backup_window | When to perform DB backups | string | `02:00-03:00` | no |
 | preferred_maintenance_window | When to perform DB maintenance | string | `sun:05:00-sun:06:00` | no |
-| prefix | ID prefix. | string | `` | no |
+| prefix | ID prefix. (h/o/p) | string | `h` | no |
 | publicly_accessible |  | string | `false` | no |
 | rds_password | (Required unless a snapshot_identifier is provided) Password for the master DB user | string | - | yes |
 | rds_username | (Required unless a snapshot_identifier is provided) Username for the master DB user | string | - | yes |
@@ -51,3 +50,4 @@ The cluster identifier on this module will not autogenerate ID's based on the ra
 | cluster_endpoint | Cluster endpoint |
 | cluster_identifier | The 'writer' endpoint for the cluster |
 | reader_endpoint | A read-only endpoint for the Aurora cluster, automatically load-balanced across replicas |
+
