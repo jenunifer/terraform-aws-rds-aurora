@@ -1,3 +1,8 @@
+### WIP
+# (Work in progress...)
+
+## Creates an RDS Cluster and instances for Aurora 
+
 
 ## Inputs
 
