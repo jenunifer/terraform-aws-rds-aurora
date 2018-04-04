@@ -1,16 +1,30 @@
-// Declare datasource grabbing regions AZs to call when creating instances in seperate zones.
-data "aws_availability_zones" "available" {}
-
-// Create 'n' number of additional DB instance(s) in same cluster
-
-resource "aws_rds_cluster_instance" "cluster_instance" {
-  count                        = "${var.replica_count}"
+resource "aws_rds_cluster_instance" "cluster_instance_0" {
+  identifier                   = "${aws_rds_cluster.default.id}-${count.index + 1}"
   cluster_identifier           = "${aws_rds_cluster.default.id}"
   engine                       = "${aws_rds_cluster.default.engine}"
   engine_version               = "${aws_rds_cluster.default.engine_version}"
-  identifier                   = "${aws_rds_cluster.default.id}-${count.index + 1}"
   instance_class               = "${var.instance_type}"
-  publicly_accessible          = false
+  publicly_accessible          = "${var.publicly_accessible}"
+  subnet_ids                   = "${var.subnet_ids}"
+  db_parameter_group_name      = "${aws_db_parameter_group.default.name}"
+  preferred_maintenance_window = "${var.preferred_maintenance_window}"
+  apply_immediately            = "${var.apply_immediately}"
+  auto_minor_version_upgrade   = "${var.auto_minor_version_upgrade}"
+  promotion_tier               = "0"
+
+  tags = "${var.tags}"
+}
+
+// Create 'n' number of additional DB instance(s) in same cluster
+resource "aws_rds_cluster_instance" "cluster_instance_n" {
+  depends_on                   = ["aws_rds_cluster_instance.cluster_instance_0"]
+  count                        = "${var.replica_count}"
+  engine                       = "${aws_rds_cluster.default.engine}"
+  engine_version               = "${aws_rds_cluster.default.engine_version}"
+   identifier                   = "${aws_rds_cluster.default.id}-${count.index + 1}"
+  cluster_identifier           = "${aws_rds_cluster.default.id}"
+  instance_class               = "${var.instance_type}"
+  publicly_accessible          = "${var.publicly_accessible}"
   subnet_ids                   = "${var.subnet_ids}"
   db_parameter_group_name      = "${aws_db_parameter_group.default.name}"
   preferred_maintenance_window = "${var.preferred_maintenance_window}"
@@ -18,17 +32,12 @@ resource "aws_rds_cluster_instance" "cluster_instance" {
   auto_minor_version_upgrade   = "${var.auto_minor_version_upgrade}"
   promotion_tier               = "${count.index + 1}"
 
-  tags {
-    role           = "${var.role}"
-    workgroup-type = "other"
-    team           = "${var.team}"
-    env            = "${var.env}"
-  }
+  tags = "${var.tags}"
 }
 
 // Creates a new RDS Aurora cluster
 resource "aws_rds_cluster" "default" {
-  cluster_identifier              = "${var.cluster_identifier}"
+  cluster_identifier              = "${lower(join(var.delimiter, compact(concat(list(var.prefix, var.role, var.env), var.id_extra))))}"
   availability_zones              = ["${var.azs}"]
   database_name                   = "${var.db_name}"
   master_username                 = "${var.rds_username}"

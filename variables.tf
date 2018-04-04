@@ -1,5 +1,20 @@
+variable "role" {
+   type = "string"
+   default = ""
+}
+variable "delimiter" {
+  description = "For use between naming (not required)."
+  default     = "-"
+}
+
 variable "cluster_identifier" {
-  type = "string"
+  type    = "string"
+  default = ""
+}
+
+variable "publicly_accessible" {
+  type    = "string"
+  default = "false"
 }
 
 variable "azs" {
@@ -41,6 +56,18 @@ variable "preferred_maintenance_window" {
   description = "When to perform DB maintenance"
 }
 
+variable "id_extra" {
+  type        = "string"
+  description = "For use if cluster/instances have an additional identifier at the end of name."
+  default     = ""
+}
+
+variable "prefix" {
+  type        = "string"
+  description = "ID prefix."
+  default     = ""
+}
+
 variable "apply_immediately" {
   type        = "string"
   default     = "false"
@@ -71,7 +98,13 @@ variable "engine" {
   description = "Aurora database engine type, currently aurora, aurora-mysql or aurora-postgresql"
 }
 
-variable "engine-version" {
+variable "env" {
+  type        = "string"
+  description = "Environment (prod/stage/dev)"
+  default     = ""
+}
+
+variable "engine_version" {
   type        = "string"
   default     = "5.7.12a"
   description = "Aurora database engine version."
