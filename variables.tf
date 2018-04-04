@@ -1,10 +1,6 @@
 variable "role" {
-   type = "string"
-   default = ""
-}
-variable "delimiter" {
-  description = "For use between naming (not required)."
-  default     = "-"
+  type    = "string"
+  default = ""
 }
 
 variable "cluster_identifier" {
@@ -56,7 +52,7 @@ variable "preferred_maintenance_window" {
   description = "When to perform DB maintenance"
 }
 
-variable "id_extra" {
+variable "pool_id" {
   type        = "string"
   description = "For use if cluster/instances have an additional identifier at the end of name."
   default     = ""
@@ -122,7 +118,7 @@ variable "instance_type" {
   description = "Instance typeuse to use"
 }
 
-variable "cluster_family" {
+variable "family" {
   type        = "string"
   description = "The family of the DB cluster parameter group"
   default     = "aurora5.7"
@@ -172,11 +168,13 @@ variable "db_cluster_parameter_group_name" {
 variable "vpc_id" {
   type        = "string"
   description = "VPC ID to create the cluster in (e.g. `vpc-a22222ee`)"
+  default     = ""
 }
 
-variable "subnet_ids" {
-  type        = "list"
-  description = "(Optional) A list of VPC subnet IDs (default: [])"
+variable "subnet_group_name" {
+  type        = "string"
+  description = "Subnet Group Name (Has to match cluster for instances.)"
+  default     = ""
 }
 
 variable "vpc_security_group_ids" {
