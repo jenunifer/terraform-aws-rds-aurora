@@ -1,6 +1,6 @@
 resource "aws_rds_cluster_instance" "cluster_instance_0" {
-  identifier                   = "${aws_rds_cluster.default.id}-${count.index + 1}"
-  cluster_identifier           = "${aws_rds_cluster.default.id}"
+  identifier                   = "${aws_rds_cluster.default.id}-00"
+  cluster_identifier           = "${var.cluster_identifier}"
   engine                       = "${aws_rds_cluster.default.engine}"
   engine_version               = "${aws_rds_cluster.default.engine_version}"
   instance_class               = "${var.instance_type}"
@@ -12,7 +12,7 @@ resource "aws_rds_cluster_instance" "cluster_instance_0" {
   promotion_tier               = "0"
   db_subnet_group_name         = "${var.subnet_group_name}"
 
-  tags = ["${var.tags}"]
+  tags = "${var.tags}"
 }
 
 // Create 'n' number of additional DB instance(s) in same cluster
@@ -21,7 +21,7 @@ resource "aws_rds_cluster_instance" "cluster_instance_n" {
   count                        = "${var.replica_count}"
   engine                       = "${aws_rds_cluster.default.engine}"
   engine_version               = "${aws_rds_cluster.default.engine_version}"
-  identifier                   = "${aws_rds_cluster.default.id}-${count.index + 1}"
+  identifier                   = "${aws_rds_cluster.default.cluster_identifier}-0${count.index + 1}"
   cluster_identifier           = "${aws_rds_cluster.default.id}"
   instance_class               = "${var.instance_type}"
   publicly_accessible          = "${var.publicly_accessible}"
@@ -31,12 +31,12 @@ resource "aws_rds_cluster_instance" "cluster_instance_n" {
   auto_minor_version_upgrade   = "${var.auto_minor_version_upgrade}"
   promotion_tier               = "${count.index + 1}"
   db_subnet_group_name         = "${var.subnet_group_name}"
-  tags                         = ["${var.tags}"]
+  tags                         = "${var.tags}"
 }
 
 // Creates a new RDS Aurora cluster0
 resource "aws_rds_cluster" "default" {
-  cluster_identifier              = "${aws_rds_cluster_parameter_group.default.id}"
+  cluster_identifier              = "${var.cluster_identifier}"
   availability_zones              = ["${var.azs}"]
   database_name                   = "${var.db_name}"
   master_username                 = "${var.rds_username}"
@@ -44,8 +44,8 @@ resource "aws_rds_cluster" "default" {
   backup_retention_period         = "${var.backup_retention_period}"
   preferred_backup_window         = "${var.preferred_backup_window}"
   preferred_maintenance_window    = "${var.preferred_maintenance_window}"
-  final_snapshot_identifier       = "${aws_rds_cluster_parameter_group.default.id}-final"
-  snapshot_identifier             = "${var.snapshot_identifier}"
+  final_snapshot_identifier       = "${var.cluster_identifier}-final"
+  snapshot_identifier             = "${var.cluster_identifier}"
   apply_immediately               = "${var.apply_immediately}"
   vpc_security_group_ids          = ["${var.vpc_security_group_ids}"]
   db_cluster_parameter_group_name = "${aws_rds_cluster_parameter_group.default.id}"
@@ -56,14 +56,14 @@ resource "aws_rds_cluster" "default" {
 }
 
 resource "aws_rds_cluster_parameter_group" "default" {
-  name        = "${var.prefix}-${var.role}-${var.env}-p${var.pool_id}"
+  name        = "${var.cluster_identifier}"
   description = "DB cluster parameter group"
   family      = "${var.family}"
   parameter   = ["${var.db_cluster_parameters}"]
 }
 
 resource "aws_db_parameter_group" "default" {
-  name        = "${var.prefix}-${var.role}-${var.env}-p${var.pool_id}"
+  name        = "${var.cluster_identifier}"
   description = "DB Instance parameter group"
   family      = "${var.family}"
   parameter   = ["${var.db_instance_parameters}"]
