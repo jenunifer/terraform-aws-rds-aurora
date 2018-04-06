@@ -1,6 +1,6 @@
 resource "aws_rds_cluster_instance" "cluster_instance_0" {
-  identifier                   = "${aws_rds_cluster.default.id}-00"
-  cluster_identifier           = "${var.cluster_identifier}"
+  identifier                   = "${aws_rds_cluster.default.cluster_identifier}-00"
+  cluster_identifier           = "${aws_rds_cluster.default.cluster_identifier}"
   engine                       = "${aws_rds_cluster.default.engine}"
   engine_version               = "${aws_rds_cluster.default.engine_version}"
   instance_class               = "${var.instance_type}"
@@ -22,7 +22,7 @@ resource "aws_rds_cluster_instance" "cluster_instance_n" {
   engine                       = "${aws_rds_cluster.default.engine}"
   engine_version               = "${aws_rds_cluster.default.engine_version}"
   identifier                   = "${aws_rds_cluster.default.cluster_identifier}-0${count.index + 1}"
-  cluster_identifier           = "${aws_rds_cluster.default.id}"
+  cluster_identifier           = "${aws_rds_cluster.default.cluster_identifier}"
   instance_class               = "${var.instance_type}"
   publicly_accessible          = "${var.publicly_accessible}"
   db_parameter_group_name      = "${aws_db_parameter_group.default.name}"
@@ -56,14 +56,14 @@ resource "aws_rds_cluster" "default" {
 }
 
 resource "aws_rds_cluster_parameter_group" "default" {
-  name        = "${var.cluster_identifier}"
+  name        = "${format("%s-%s-%s", var.role, var.env, var.pool_id)}"
   description = "DB cluster parameter group"
   family      = "${var.family}"
   parameter   = ["${var.db_cluster_parameters}"]
 }
 
 resource "aws_db_parameter_group" "default" {
-  name        = "${var.cluster_identifier}"
+  name        = "${format("%s-%s-%s", var.role, var.env, var.pool_id)}"
   description = "DB Instance parameter group"
   family      = "${var.family}"
   parameter   = ["${var.db_instance_parameters}"]
