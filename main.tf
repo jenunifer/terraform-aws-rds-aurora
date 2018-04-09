@@ -37,7 +37,7 @@ resource "aws_rds_cluster_instance" "cluster_instance_n" {
 // Creates a new RDS Aurora cluster0
 resource "aws_rds_cluster" "default" {
   cluster_identifier              = "${var.cluster_identifier}"
-  availability_zones              = ["${element(split(",", var.azs), count.index)}"]
+  availability_zones              = ["${var.azs}"]
   database_name                   = "${var.db_name}"
   master_username                 = "${var.rds_username}"
   master_password                 = "${var.rds_password}"

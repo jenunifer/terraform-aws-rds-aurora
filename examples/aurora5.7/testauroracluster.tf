@@ -8,7 +8,8 @@ module "test-aurora-1" {
   subnet_group_name      = "aws_subnet_group"
   vpc_security_group_ids = ["sg-bahaahaha"]
   role                   = "test"
-  pool_id		 = "1"
+  pool_id                = "1"
+
   tags = {
     team          = "test-team"
     env           = "stage"
