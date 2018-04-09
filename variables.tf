@@ -121,7 +121,7 @@ variable "instance_type" {
 variable "family" {
   type        = "string"
   description = "The family of the DB cluster parameter group"
-  default     = "aurora5.7"
+  default     = "aurora-mysql5.7"
 }
 
 variable "auto_minor_version_upgrade" {
@@ -155,7 +155,7 @@ variable "db_instance_parameters" {
 
 variable "db_parameter_group_name" {
   type        = "string"
-  default     = "default.aurora5.7"
+  default     = "aurora-mysql5.7"
   description = "The name of a DB parameter group to use"
 }
 
