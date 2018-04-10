@@ -90,7 +90,7 @@ variable "tags" {
 
 variable "engine" {
   type        = "string"
-  default     = "aurora"
+  default     = "aurora-mysql"
   description = "Aurora database engine type, currently aurora, aurora-mysql or aurora-postgresql"
 }
 
@@ -102,7 +102,7 @@ variable "env" {
 
 variable "engine_version" {
   type        = "string"
-  default     = "5.7.12a"
+  default     = "5.7.12"
   description = "Aurora database engine version."
 }
 
@@ -137,20 +137,15 @@ variable "db_cluster_parameters" {
 }
 
 variable "db_instance_parameters" {
-  type = "list"
+  type        = "list"
+  description = "A list of DB parameter maps to apply"
 
   default = [
     {
       name  = "slow_query_log"
       value = "1"
     },
-    {
-      name  = "slow_query_log_file"
-      value = "/rdsdbdata/log/slowquery/mysql-slowquery.log	"
-    },
   ]
-
-  description = "List of DB instances parameters to apply"
 }
 
 variable "db_parameter_group_name" {

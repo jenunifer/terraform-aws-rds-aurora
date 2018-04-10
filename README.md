@@ -1,30 +1,35 @@
-
 ## Example config file
 
-testauroracluster.tf
+rds-aurora.tf
 ```
-| module "test-aurora-1" {
-  source                 = "jenunifer/rds-aurora/aws"
-  cluster_identifier     = "test-aurora-1"
-  azs                    = ["us-west-2a"]
-  rds_username           = "testuser"
-  rds_password           = "testpassword"
-  vpc_id                 = "vpc-xxxxxx"
-  subnet_group_name      = "aws_subnet_group"
-  vpc_security_group_ids = ["sg-bahaahaha"]
-  role                   = "test"
-
-  tags = {
-    team          = "test-team"
-    env           = "stage"
-    workload-type = "other"
-    role          = "test"
-  }
-
-  replica_count       = 2
-  publicly_accessible = false
+variable "azs" {
+  default = "us-west-2a,us-west-2b"
 }
 
+module "mysqltest-sta-1" {
+  source                 = "git::ssh://git@gitlab.corp.tune.com/ops/tune_terraform-modules//rds-aurora"
+  cluster_identifier     = "h-mysqltest-sta-p1"
+  azs                    = ["us-west-2a"]
+  rds_username           = "rds_test_a"
+  rds_password           = "testpw"
+  vpc_id                 = "vpc-test"
+  subnet_group_name      = "aws_be_services"
+  vpc_security_group_ids = ["sg-test"]
+
+  tags = {
+    team          = "corp-it-dba"
+    env           = "stage"
+    workload-type = "other"
+    role          = "mysqltest"
+  }
+
+  role    = "mysqltest"
+  env     = "stage"
+  pool_id = "1"
+
+  replica_count       = 0
+  publicly_accessible = false
+}
 ```
 
 ## Inputs
@@ -40,12 +45,12 @@ testauroracluster.tf
 | db_cluster_parameters | List of DB cluster parameters to apply | list | `<list>` | no |
 | db_instance_parameters | List of DB instances parameters to apply | list | `<list>` | no |
 | db_name | Database name | string | `dba_ops` | no |
-| db_parameter_group_name | The name of a DB parameter group to use | string | `default.aurora5.7` | no |
+| db_parameter_group_name | The name of a DB parameter group to use | string | `aurora-mysql5.7` | no |
 | db_port | Database port | string | `3306` | no |
 | engine | Aurora database engine type, currently aurora, aurora-mysql or aurora-postgresql | string | `aurora` | no |
 | engine_version | Aurora database engine version. | string | `5.7.12a` | no |
 | env | Environment (prod/stage/dev) | string | `` | no |
-| family | The family of the DB cluster parameter group | string | `aurora5.7` | no |
+| family | The family of the DB cluster parameter group | string | `aurora-mysql5.7` | no |
 | final_snapshot_identifier | The name to use when creating a final snapshot on cluster destroy, appends a random 8 digits to name to ensure it's unique too. | string | `` | no |
 | instance_type | Instance typeuse to use | string | `db.t2.medium` | no |
 | pool_id | For use if cluster/instances have an additional identifier at the end of name. | string | `1` | no |

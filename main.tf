@@ -45,7 +45,7 @@ resource "aws_rds_cluster" "default" {
   preferred_backup_window         = "${var.preferred_backup_window}"
   preferred_maintenance_window    = "${var.preferred_maintenance_window}"
   final_snapshot_identifier       = "${var.cluster_identifier}-final"
-  snapshot_identifier             = "${var.cluster_identifier}"
+  snapshot_identifier             = "${var.snapshot_identifier}"
   apply_immediately               = "${var.apply_immediately}"
   vpc_security_group_ids          = ["${var.vpc_security_group_ids}"]
   db_cluster_parameter_group_name = "${aws_rds_cluster_parameter_group.default.id}"
