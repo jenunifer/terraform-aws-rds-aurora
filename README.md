@@ -32,7 +32,7 @@ module "test-aurora-1" {
 | auto_minor_version_upgrade | Determines whether minor engine upgrades will be performed automatically in the maintenance window | string | `true` | no |
 | azs | List of AZs to use | list | - | yes |
 | backup_retention_period | How long to keep backups for (in days) | string | `7` | no |
-| cluster_identifier |  | string | `` | no |
+| cluster_identifier | Cluster ID name for cluster. | string | - | yes |
 | db_cluster_parameter_group_name | The name of a DB Cluster parameter group to use | string | `default.aurora5.7` | no |
 | db_cluster_parameters | List of DB cluster parameters to apply | list | `<list>` | no |
 | db_instance_parameters | A list of DB parameter maps to apply | list | `<list>` | no |
