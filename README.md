@@ -2,32 +2,25 @@
 
 rds-aurora.tf
 ```
-variable "azs" {
-  default = "us-west-2a,us-west-2b"
-}
-
-module "mysqltest-sta-1" {
-  source                 = "git::ssh://git@gitlab.corp.tune.com/ops/tune_terraform-modules//rds-aurora"
-  cluster_identifier     = "h-mysqltest-sta-p1"
+module "test-aurora-1" {
+  source                 = "jenunifer/rds-aurora/aws"
+  cluster_identifier     = "test-aurora-1"
   azs                    = ["us-west-2a"]
-  rds_username           = "rds_test_a"
-  rds_password           = "testpw"
-  vpc_id                 = "vpc-test"
-  subnet_group_name      = "aws_be_services"
-  vpc_security_group_ids = ["sg-test"]
+  rds_username           = "testuser"
+  rds_password           = "testpassword"
+  vpc_id                 = "vpc-xxxxxx"
+  subnet_group_name      = "aws_subnet_group"
+  vpc_security_group_ids = ["sg-bahaahaha"]
+  role                   = "test"
 
   tags = {
-    team          = "corp-it-dba"
+    team          = "test-team"
     env           = "stage"
     workload-type = "other"
-    role          = "mysqltest"
+    role          = "test"
   }
 
-  role    = "mysqltest"
-  env     = "stage"
-  pool_id = "1"
-
-  replica_count       = 0
+  replica_count       = 2
   publicly_accessible = false
 }
 ```
