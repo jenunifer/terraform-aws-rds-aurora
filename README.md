@@ -10,11 +10,11 @@ variable "azs" {
 
 locals {
   local_pool_id = "1"
-  local_prefix  = "h"
+  local_prefix  = "d"
 
   common_tags = {
     terraform     = "true"
-    team          = "corp-marketing"
+    team          = "dev-team"
     env           = "stage"
     workload-type = "other"
     role          = "mysqltest"
@@ -24,10 +24,10 @@ locals {
 module "mysqltest-sta-1" {
   source = "../rds-aurora"
 
-  rds_username           = "rds_god_a"
+  rds_username           = "rds_admin"
   rds_password           = "test"
   vpc_id                 = "vpc-test"
-  subnet_group_name      = "aws_be_services"
+  subnet_group_name      = "aws_sg_group"
   vpc_security_group_ids = ["test-sec-group"]
   azs                    = ["${var.azs}"]
 
