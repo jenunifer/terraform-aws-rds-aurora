@@ -8,6 +8,11 @@ variable "cluster_identifier" {
   default = ""
 }
 
+variable "availability_zone" {
+  type    = "string"
+  default = ""
+}
+
 variable "publicly_accessible" {
   type    = "string"
   default = "false"
@@ -20,7 +25,6 @@ variable "azs" {
 
 variable "db_name" {
   type        = "string"
-  default     = "dba_ops"
   description = "Database name"
 }
 
@@ -94,6 +98,12 @@ variable "engine" {
   description = "Aurora database engine type, currently aurora, aurora-mysql or aurora-postgresql"
 }
 
+variable "team" {
+  type        = "string"
+  description = "Team that owns the data."
+  default     = ""
+}
+
 variable "env" {
   type        = "string"
   description = "Environment (prod/stage/dev)"
@@ -115,7 +125,7 @@ variable "replica_count" {
 variable "instance_type" {
   type        = "string"
   default     = "db.t2.medium"
-  description = "Instance typeuse to use"
+  description = "Instance type to use.  The module (for defaults) creates db.t2.medium for production and db.t2.small for staging."
 }
 
 variable "family" {
@@ -132,8 +142,15 @@ variable "auto_minor_version_upgrade" {
 
 variable "db_cluster_parameters" {
   type        = "list"
-  default     = []
   description = "List of DB cluster parameters to apply"
+
+  default = [
+    {
+      name         = "innodb_strict_mode"
+      value        = "0"
+      apply_method = "pending-reboot"
+    },
+  ]
 }
 
 variable "db_instance_parameters" {
@@ -142,8 +159,28 @@ variable "db_instance_parameters" {
 
   default = [
     {
+      name  = "innodb_buffer_pool_dump_at_shutdown"
+      value = "1"
+    },
+    {
+      name  = "innodb_buffer_pool_load_at_startup"
+      value = "1"
+    },
+    {
+      name  = "log_output"
+      value = "TABLE"
+    },
+    { 
+      name  = "log_warnings"
+      value = "2"
+    },
+    {
       name  = "slow_query_log"
       value = "1"
+    },
+    {
+      name  = "long_query_time"
+      value = ".5"
     },
   ]
 }
@@ -174,7 +211,7 @@ variable "subnet_group_name" {
 
 variable "vpc_security_group_ids" {
   type        = "list"
-  description = "(Optional) List of VPC security groups to associate(default [])"
+  description = "List of VPC security groups to associate(default [])"
 }
 
 variable "snapshot_identifier" {
