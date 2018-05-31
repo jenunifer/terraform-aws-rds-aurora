@@ -22,8 +22,8 @@ locals {
 }
 
 module "mysqltest-sta-1" {
-  source = "../rds-aurora"
-
+  source  = "jenunifer/rds-aurora/aws"
+  version = "0.3.0"
   rds_username           = "rds_admin"
   rds_password           = "test"
   vpc_id                 = "vpc-test"
