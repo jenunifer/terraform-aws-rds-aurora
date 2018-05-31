@@ -65,7 +65,7 @@ variable "pool_id" {
 variable "prefix" {
   type        = "string"
   description = "ID prefix. (h/o/p)"
-  default     = "h"
+  default     = ""
 }
 
 variable "apply_immediately" {
@@ -170,7 +170,7 @@ variable "db_instance_parameters" {
       name  = "log_output"
       value = "TABLE"
     },
-    { 
+    {
       name  = "log_warnings"
       value = "2"
     },

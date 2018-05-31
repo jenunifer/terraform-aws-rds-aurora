@@ -54,7 +54,7 @@ resource "aws_rds_cluster_instance" "cluster_instance_n" {
 
 // Creates a new RDS Aurora cluster0
 resource "aws_rds_cluster" "default" {
-  cluster_identifier              = "${local.local_prefix}-${local.common_tags["role"]}-${local.common_tags["env"] == "stage" ? "sta" : local.common_tags["env"]}-p${local.local_pool_id}"
+  cluster_identifier              = "${local.local_prefix != "" ? format("%s-", local.local_prefix) : ""}${local.common_tags["role"]}-${local.common_tags["env"] == "stage" ? "sta" : local.common_tags["env"]}-p${local.local_pool_id}"
   availability_zones              = ["${var.azs}"]
   database_name                   = "${var.db_name}"
   master_username                 = "${var.rds_username}"

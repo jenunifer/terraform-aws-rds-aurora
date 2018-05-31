@@ -40,6 +40,24 @@ module "mysqltest-sta-1" {
 }
 ```
 
+## Module Computing
+
+The below variables are auto-generated based on specific input data provided in the locals section:
+
+# aws_rds_cluster_parameter_group name: "${format("%s-%s-%s", var.role, var.env, var.pool_id)}"
+*(From above example config, the name will be: `mysqltest-stage-1`)*
+
+# aws_rds_parameter_group name:  "${format("%s-%s-%s", var.role, var.env, var.pool_id)}"
+*(From above example config, the name will be: `mysqltest-stage-1`)*
+
+# cluster_identifier:  If a prefix is provided in local_prefix on config page (see above example), the cluster_identifier is computed with: `${local_prefix}-${local.common_tags["role"]}-${local.common_tags["env"] == "stage" ? "sta" : local.common_tags["env"]}-p${local.local_pool_id}`
+*(From example config, the cluster_identifier will be: `h-mysqltest-sta-p1`)*
+
+# identifier: If you add a replica_count (default is 0 for 1 instance) the indentifier id is incremented. The identifier is computed with: `"${aws_rds_cluster.default.cluster_identifier}-0${count.index + 1}-${substr(element(var.azs, count.index + 1), -2, -1)}"`
+*(From example config, the identifier will be: `h-mysqltest-sta-p1-00-1a`, `h-mysqltest-sta-p1-01-1b`)  - The last two characters are the last two of the availability zone.  Each instance loops through list of AZs and assigns next in line to last.*
+
+NOTE: If you do not provide a prefix/local_prefix, the cluster_identifier and instances will leave off the `h-` (ie: cluster_identifier: `mysqltest-sta-p1`)
+
 ## Inputs
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
@@ -86,4 +104,3 @@ module "mysqltest-sta-1" {
 | cluster_endpoint | Cluster endpoint |
 | cluster_identifier | The 'writer' endpoint for the cluster |
 | reader_endpoint | A read-only endpoint for the Aurora cluster, automatically load-balanced across replicas |
-
