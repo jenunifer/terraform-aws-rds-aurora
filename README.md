@@ -1,6 +1,3 @@
-## {{ (datasource "git").name }} [![Build Status](https://travis-ci.com/jenunifer/terraform-aws-rds-aurora.svg?branch=master)](https://travis-ci.com/jenunifer/terraform-aws-rds-aurora)
-{{ (datasource "section").warning }}
-
 
 
 ## Example config file
