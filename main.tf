@@ -74,14 +74,14 @@ resource "aws_rds_cluster" "default" {
 }
 
 resource "aws_rds_cluster_parameter_group" "default" {
-  name        = "${format("%s-%s-%s", var.role, var.env, var.pool_id)}"
+  name        = "${local.local_prefix != "" ? format("%s-", local.local_prefix) : ""}${format("%s-%s-cpg-%s", var.role, var.env, var.pool_id)}"
   description = "DB cluster parameter group"
   family      = "${var.family}"
   parameter   = ["${var.db_cluster_parameters}"]
 }
 
 resource "aws_db_parameter_group" "default" {
-  name        = "${format("%s-%s-%s", var.role, var.env, var.pool_id)}"
+  name        = "${local.local_prefix != "" ? format("%s-", local.local_prefix) : ""}${format("%s-%s-dpg-%s", var.role, var.env, var.pool_id)}"
   description = "DB Instance parameter group"
   family      = "${var.family}"
   parameter   = ["${var.db_instance_parameters}"]
